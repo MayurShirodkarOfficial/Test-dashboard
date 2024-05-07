@@ -20,17 +20,17 @@ const SystemMetrics = () => {
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <Typography
                     sx={{ fontWeight:800,flexGrow: 1, width: '50%', padding: "0.5rem", borderBottom: '2px solid transparent', transition: 'border-bottom-color 0.3s',textAlign:'center' }}
-                    onMouseEnter={e => e.target.style.borderBottomColor = '#37146B'}
-                    onMouseLeave={e => e.target.style.borderBottomColor = 'transparent'}
-                    onClick={e => e.target.style.borderBottomColor = '#37146B'}
+                    onMouseEnter={(e:any) => e.target.style.borderBottomColor = '#37146B'}
+                    onMouseLeave={(e:any) => e.target.style.borderBottomColor = 'transparent'}
+                    onClick={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
                 >
                     CPU
                 </Typography>
                 <Typography
                     sx={{ fontWeight:800,flexGrow: 1, width: '50%', padding: "0.5rem", borderBottom: '2px solid transparent', transition: 'border-bottom-color 0.3s',textAlign:'center' }}
-                    onMouseEnter={e => e.target.style.borderBottomColor = '#37146B'}
-                    onMouseLeave={e => e.target.style.borderBottomColor = 'transparent'}
-                    onClick={e => e.target.style.borderBottomColor = '#37146B'}
+                    onMouseEnter={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
+                    onMouseLeave={(e:any)  => e.target.style.borderBottomColor = 'transparent'}
+                    onClick={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
                 >
                     Memory
                 </Typography>
