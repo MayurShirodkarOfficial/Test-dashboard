@@ -1,7 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { useContext } from "react";
+import { DashBoardContext } from "../context/dashboard";
 
 const ServiceInfo = () => {
+     const{currentApplication} = useContext(DashBoardContext);
+
     return (
         <Box sx={{
             backgroundColor: '#FFFFFF',
@@ -17,12 +21,12 @@ const ServiceInfo = () => {
                     <Typography>Current Version</Typography>
                     <Box sx={{ display: "flex" }}>
                         <CheckCircleOutlineOutlinedIcon />
-                        <Typography>In Sync</Typography>
+                        <Typography>{currentApplication.version}</Typography>
                     </Box>
                 </Box>
                 <Box>
                     <Typography>Desired Version</Typography>
-                    <Typography sx={{ textAlign: "left" }}>1.2.1</Typography>
+                    <Typography sx={{ textAlign: "left" }}>{currentApplication.desiredVersion}</Typography>
                 </Box>
             </Box>
             <Button sx={{ padding:'8px',backgroundColor: ' #8c1aff', color: 'white', textTransform: 'none',display:"block", marginLeft:"0.5rem" ,marginTop:"2rem",fontWeight:600}}>Deploy</Button>

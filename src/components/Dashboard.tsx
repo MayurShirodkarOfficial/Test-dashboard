@@ -87,10 +87,13 @@ export default function Dashboard() {
     fetch('https://retoolapi.dev/71NNjB/applications')
       .then(response => response.json())
       .then(data => setApplications(data))
-      .catch(error => console.error('Error fetching data:', error));
-      
+      .catch(error => console.error('Error fetching data:', error));     
   }, []);
-    setCurrentApplication(applications[0])
+
+  React.useEffect(()=>{
+    setCurrentApplication(applications[0]);
+  },[applications])
+  
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = () => {
