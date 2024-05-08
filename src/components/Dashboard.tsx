@@ -79,7 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Dashboard() {
     const {
-        setApplications,
+        applications,setApplications,setCurrentApplication
       } = React.useContext(DashBoardContext);
 
     React.useEffect(() => {
@@ -88,7 +88,9 @@ export default function Dashboard() {
       .then(response => response.json())
       .then(data => setApplications(data))
       .catch(error => console.error('Error fetching data:', error));
+      
   }, []);
+    setCurrentApplication(applications[0])
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = () => {

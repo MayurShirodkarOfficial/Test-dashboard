@@ -9,6 +9,8 @@ interface DashBoardContextProps {
   setCurrentSelectedDashboardMenu: (menu: string) => void;
   currentSelectedSubDashboardMenu: string;
   setCurrentSelectedSubDashboardMenu: (menu: string) => void;
+  systemMetrics:string,
+  setSystemMetrics: (menu:string) => void;
 }
 
 const DashBoardContext = createContext<DashBoardContextProps>({
@@ -20,6 +22,8 @@ const DashBoardContext = createContext<DashBoardContextProps>({
   setCurrentSelectedDashboardMenu: () => {},
   currentSelectedSubDashboardMenu: '',
   setCurrentSelectedSubDashboardMenu: () => {},
+  systemMetrics:'',
+  setSystemMetrics:() =>{}
 });
 
 const DashBoardContextProvider = ({ children }:any) => {
@@ -35,6 +39,9 @@ const DashBoardContextProvider = ({ children }:any) => {
   // State for sub dashboard menu
   const [currentSelectedSubDashboardMenu, setCurrentSelectedSubDashboardMenu] = useState<string>(''); // Change the type to string
 
+  //state of system metrics
+  const [systemMetrics,setSystemMetrics] = useState<string>('cpu');
+
   // Load context data from localStorage on component mount
   useEffect(() => {
     const storedContext = localStorage.getItem('dashboardContext');
@@ -44,6 +51,7 @@ const DashBoardContextProvider = ({ children }:any) => {
       setCurrentApplication(parsedContext.currentApplication);
       setCurrentSelectedDashboardMenu(parsedContext.currentSelectedDashboardMenu);
       setCurrentSelectedSubDashboardMenu(parsedContext.currentSelectedSubDashboardMenu);
+      setSystemMetrics(parsedContext.systemMetrics);
     }
   }, []);
 
@@ -53,10 +61,11 @@ const DashBoardContextProvider = ({ children }:any) => {
       applications,
       currentApplication,
       currentSelectedDashboardMenu,
-      currentSelectedSubDashboardMenu
+      currentSelectedSubDashboardMenu,
+      systemMetrics
     });
     localStorage.setItem('dashboardContext', contextToStore);
-  }, [applications, currentApplication, currentSelectedDashboardMenu, currentSelectedSubDashboardMenu]);
+  }, [applications, currentApplication, currentSelectedDashboardMenu, currentSelectedSubDashboardMenu,systemMetrics]);
 
   return (
     <DashBoardContext.Provider value={{
@@ -67,7 +76,9 @@ const DashBoardContextProvider = ({ children }:any) => {
       currentSelectedDashboardMenu,
       setCurrentSelectedDashboardMenu,
       currentSelectedSubDashboardMenu,
-      setCurrentSelectedSubDashboardMenu
+      setCurrentSelectedSubDashboardMenu,
+      systemMetrics,
+      setSystemMetrics
     }}>
       {children}
     </DashBoardContext.Provider>

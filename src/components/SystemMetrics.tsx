@@ -1,7 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import CpuUtilisationGraph from "./graphs/CpuUtilisationGraph";
+import { useContext } from "react";
+import { DashBoardContext } from "../context/dashboard";
+import MemoryUtilisationGraph from "./graphs/MemoryUtilisationGraph";
 
 const SystemMetrics = () => {
+    const {systemMetrics,setSystemMetrics} = useContext(DashBoardContext);
     return (
         <Box
             sx={{
@@ -22,7 +26,7 @@ const SystemMetrics = () => {
                     sx={{ fontWeight:800,flexGrow: 1, width: '50%', padding: "0.5rem", borderBottom: '2px solid transparent', transition: 'border-bottom-color 0.3s',textAlign:'center' }}
                     onMouseEnter={(e:any) => e.target.style.borderBottomColor = '#37146B'}
                     onMouseLeave={(e:any) => e.target.style.borderBottomColor = 'transparent'}
-                    onClick={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
+                    onClick={(e:any)  => {e.target.style.borderBottomColor = '#37146B';setSystemMetrics('cpu')}}
                 >
                     CPU
                 </Typography>
@@ -30,14 +34,14 @@ const SystemMetrics = () => {
                     sx={{ fontWeight:800,flexGrow: 1, width: '50%', padding: "0.5rem", borderBottom: '2px solid transparent', transition: 'border-bottom-color 0.3s',textAlign:'center' }}
                     onMouseEnter={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
                     onMouseLeave={(e:any)  => e.target.style.borderBottomColor = 'transparent'}
-                    onClick={(e:any)  => e.target.style.borderBottomColor = '#37146B'}
+                    onClick={(e:any)  => {e.target.style.borderBottomColor = '#37146B';setSystemMetrics('memory');}}
                 >
                     Memory
                 </Typography>
             </Box>
 
             <Box sx={{ margin: '2rem' }}>
-                <CpuUtilisationGraph />
+                {systemMetrics === 'cpu' ? <CpuUtilisationGraph />:<MemoryUtilisationGraph/>}
             </Box>
 
         </Box>

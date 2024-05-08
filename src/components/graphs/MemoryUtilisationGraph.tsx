@@ -3,13 +3,13 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { DashBoardContext } from '../../context/dashboard';
 
-const CpuUtilisationGraph = () => {
+const MemoryUtilisationGraph = () => {
   const {currentApplication} = useContext(DashBoardContext);
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://retoolapi.dev/Ymxfa2/cpuutilization');
+        const response = await fetch('https://retoolapi.dev/ybFVVH/memoryutilization');
         const jsonData = await response.json();
         // Filter data based on selected application
         const filteredData = jsonData.filter((item:any) => Number(item.applicationId) === currentApplication.id);
@@ -29,23 +29,24 @@ const CpuUtilisationGraph = () => {
       width: 500, // Adjust the width as needed
     },
     title: {
-      text: 'CPU Utilization',
+      text: 'Memory Utilization',
     },
     xAxis: {
       type: 'datetime',
       dateTimeLabelFormats: {
         hour: '%I:%M %p' // Format for hours and minutes
-      },
+      }
     },
     yAxis: {
       title: {
         text: 'Utilization (%)',
       },
+    
     },
     series: [
       {
-        name: 'CPU Utilization',
-        data: data.map((item:any) => [parseInt(item.timestamp) * 1000, parseFloat(item.cpuUtilization)]), // Convert timestamp to milliseconds
+        name: 'Memory Utilization',
+        data: data.map((item:any) => [parseInt(item.timestamp) * 1000, parseFloat(item.memoryUtilization)]), // Convert timestamp to milliseconds
         type: 'line',
       },
     ],
@@ -54,4 +55,4 @@ const CpuUtilisationGraph = () => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default CpuUtilisationGraph;
+export default MemoryUtilisationGraph;
