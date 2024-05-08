@@ -31,7 +31,7 @@ const DashBoardContextProvider = ({ children }:any) => {
   const [applications, setApplications] = useState<any[]>([]);
   
   // State for currently chosen application
-  const [currentApplication, setCurrentApplication] = useState<any | null>(null);
+  const [currentApplication, setCurrentApplication] = useState<any | null>(applications[0]);
   
   // State for dashboard menu
   const [currentSelectedDashboardMenu, setCurrentSelectedDashboardMenu] = useState<string>(''); // Change the type to string
