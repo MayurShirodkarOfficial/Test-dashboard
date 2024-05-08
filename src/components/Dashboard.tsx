@@ -20,6 +20,7 @@ import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
 import ListItemWrapper from './ListItemWrapper';
 import DashboardHeader from './DashboardHeader';
 import Application from './Application';
+import { DashBoardContext } from '../context/dashboard';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -77,6 +78,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function Dashboard() {
+    const {
+        setApplications,
+      } = React.useContext(DashBoardContext);
+
+    React.useEffect(() => {
+    // Fetch data from API
+    fetch('https://retoolapi.dev/71NNjB/applications')
+      .then(response => response.json())
+      .then(data => setApplications(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = () => {

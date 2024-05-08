@@ -1,47 +1,76 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from 'react';
 
-type Tab = string;
-type SubTab = string;
-
-interface DashBoardContextType {
-    dashboardState: {
-        currentTab: Tab;
-        currentSubTab: SubTab;
-    };
-    updateCurrentTab: (tab: Tab) => void;
-    updateCurrentSubTab: (subTab: SubTab) => void;
+interface DashBoardContextProps {
+  applications: any[]; 
+  setApplications: (applications: any[]) => void;
+  currentApplication: any | null; 
+  setCurrentApplication: (application: any | null) => void;
+  currentSelectedDashboardMenu: string; 
+  setCurrentSelectedDashboardMenu: (menu: string) => void;
+  currentSelectedSubDashboardMenu: string;
+  setCurrentSelectedSubDashboardMenu: (menu: string) => void;
 }
 
-const DashBoardContext = createContext<DashBoardContextType | undefined>(undefined);
+const DashBoardContext = createContext<DashBoardContextProps>({
+  applications: [],
+  setApplications: () => {},
+  currentApplication: null,
+  setCurrentApplication: () => {},
+  currentSelectedDashboardMenu: '',
+  setCurrentSelectedDashboardMenu: () => {},
+  currentSelectedSubDashboardMenu: '',
+  setCurrentSelectedSubDashboardMenu: () => {},
+});
 
-const DashBoardContextProvider = ({children}:any) => {
+const DashBoardContextProvider = ({ children }:any) => {
+  // State for applications
+  const [applications, setApplications] = useState<any[]>([]);
   
-    const [dashboardState, setDashboardState] = useState({
-        currentTab: "",
-        currentSubTab: ""
+  // State for currently chosen application
+  const [currentApplication, setCurrentApplication] = useState<any | null>(null);
+  
+  // State for dashboard menu
+  const [currentSelectedDashboardMenu, setCurrentSelectedDashboardMenu] = useState<string>(''); // Change the type to string
+  
+  // State for sub dashboard menu
+  const [currentSelectedSubDashboardMenu, setCurrentSelectedSubDashboardMenu] = useState<string>(''); // Change the type to string
+
+  // Load context data from localStorage on component mount
+  useEffect(() => {
+    const storedContext = localStorage.getItem('dashboardContext');
+    if (storedContext) {
+      const parsedContext = JSON.parse(storedContext);
+      setApplications(parsedContext.applications);
+      setCurrentApplication(parsedContext.currentApplication);
+      setCurrentSelectedDashboardMenu(parsedContext.currentSelectedDashboardMenu);
+      setCurrentSelectedSubDashboardMenu(parsedContext.currentSelectedSubDashboardMenu);
+    }
+  }, []);
+
+  // Save context data to localStorage whenever it changes
+  useEffect(() => {
+    const contextToStore = JSON.stringify({
+      applications,
+      currentApplication,
+      currentSelectedDashboardMenu,
+      currentSelectedSubDashboardMenu
     });
+    localStorage.setItem('dashboardContext', contextToStore);
+  }, [applications, currentApplication, currentSelectedDashboardMenu, currentSelectedSubDashboardMenu]);
 
-    const updateCurrentTab = (tab: Tab) => {
-        setDashboardState((prevState) => ({
-            ...prevState,
-            currentTab: tab
-        }));
-    };
-
-    const updateCurrentSubTab = (subTab: SubTab) => {
-        setDashboardState((prevState) => ({
-            ...prevState,
-            currentSubTab: subTab
-        }));
-    };
-
-    const contextValue: DashBoardContextType = {
-        dashboardState,
-        updateCurrentTab,
-        updateCurrentSubTab
-    };
-
-    return <DashBoardContext.Provider value={contextValue}>{children}</DashBoardContext.Provider>;
+  return (
+    <DashBoardContext.Provider value={{
+      applications,
+      setApplications,
+      currentApplication,
+      setCurrentApplication,
+      currentSelectedDashboardMenu,
+      setCurrentSelectedDashboardMenu,
+      currentSelectedSubDashboardMenu,
+      setCurrentSelectedSubDashboardMenu
+    }}>
+      {children}
+    </DashBoardContext.Provider>
+  );
 };
-
-export { DashBoardContext, DashBoardContextProvider };
+export {DashBoardContext,DashBoardContextProvider};
