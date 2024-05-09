@@ -9,12 +9,22 @@ import EventHistory from './EventHistory';
 import { useContext } from 'react';
 import { DashBoardContext } from '../context/dashboard';
 import StatusButton from './StatusButton';
+import EnvironmentVariables from './EnvironmentVariables';
 
 const Application = () => {
-    const { currentApplication } = useContext(DashBoardContext);
-    console.log(currentApplication);
+    const { currentApplication, setCurrentSelectedSubDashboardMenu, currentSelectedSubDashboardMenu } = useContext(DashBoardContext);
     if (!currentApplication) {
         return <div>Loading...</div>;
+    }
+    let applicationDashboardDisplayService = <Box>
+        <ServiceInfo />
+        <Box sx={{ display: "flex", gap: 2 }}>
+            <SystemMetrics />
+            <EventHistory />
+        </Box>
+    </Box>;
+    if (currentSelectedSubDashboardMenu === 'ENVIRONMENT-VARIABLES') {
+        applicationDashboardDisplayService = <EnvironmentVariables/>
     }
 
     return (
@@ -23,7 +33,7 @@ const Application = () => {
                 <Typography variant='h6' sx={{ textAlign: 'left' }}>
                     {currentApplication.name}
                 </Typography>
-                <Box sx={{marginTop:'4px',paddingTop:'8px',marginRight:'37px'}}>
+                <Box sx={{ marginTop: '4px', paddingTop: '8px', marginRight: '37px' }}>
                     <StatusButton status={currentApplication.status} />
                 </Box>
             </Box>
@@ -34,7 +44,8 @@ const Application = () => {
                 </Typography>
 
                 <BuildOutlinedIcon sx={{ marginRight: '0.5rem' }} />
-                <Typography variant="body1" sx={{ marginRight: '1rem', cursor: 'pointer' }}>
+                <Typography variant="body1" sx={{ marginRight: '1rem', cursor: 'pointer' }}
+                    onClick={() => setCurrentSelectedSubDashboardMenu('ENVIRONMENT-VARIABLES')} >
                     Environment Variable
                 </Typography>
 
@@ -48,11 +59,7 @@ const Application = () => {
                     Event History
                 </Typography>
             </Box>
-            <ServiceInfo />
-            <Box sx={{ display: "flex", gap: 2 }}>
-                <SystemMetrics />
-                <EventHistory />
-            </Box>
+            { applicationDashboardDisplayService }
         </Box>
     )
 }
