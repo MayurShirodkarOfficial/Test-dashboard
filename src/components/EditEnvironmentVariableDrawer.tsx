@@ -5,6 +5,7 @@ import {
     Drawer,
     IconButton,
     Typography,
+
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
@@ -50,6 +51,7 @@ const EditEnvironmentVariableDrawer = ({ isOpen, onClose }: any) => {
                     backgroundColor: "#FFFFFF",
                     zIndex: 10,
                     width: "90%",
+                    minHeight:"25%",
                     border: "1px solid lightgray",
                     borderRadius: "8px",
                     marginTop: "5rem",

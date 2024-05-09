@@ -50,6 +50,17 @@ const StatusButton = ({ status }: any) => {
       buttonText = 'Failed';
       dotColor = red[800]; 
       break;
+      case 'uninstalled':
+      buttonStyle = {
+        backgroundColor: red['A100'],
+        color: red[800],
+        border: `1px solid ${red[800]}`,
+        position: 'relative',
+        margin:'auto'
+      };
+      buttonText = 'Failed';
+      dotColor = red[800]; 
+      break;
     default:
       buttonStyle = {};
       buttonText = 'Unknown';
