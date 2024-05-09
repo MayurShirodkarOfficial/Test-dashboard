@@ -58,7 +58,7 @@ const StatusButton = ({ status }: any) => {
         position: 'relative',
         margin:'auto'
       };
-      buttonText = 'Failed';
+      buttonText = 'uninstalled';
       dotColor = red[800]; 
       break;
     default:
